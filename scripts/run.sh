@@ -113,7 +113,7 @@ do
         adb -s $device shell am instrument -w -e class $line $package.test/android.support.test.runner.AndroidJUnitRunner > $runningTest
         endTime=$(node -e 'console.log(Date.now())')
         echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis."
-        echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis." >> "artifacts/times.txt"
+        echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis." >> "$outputDir/times.txt"
     fi
 
     # kill logcat process
