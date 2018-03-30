@@ -151,6 +151,7 @@ do
         adb -s $device shell dumpsys alarm > $alarms
 
         # fail
+        adb -s $device shell am force-stop $package
         echo "[x] FAIL"
         echo "$shortReason"
         echo ""
@@ -158,6 +159,7 @@ do
     else
 
         # remove dir if we are fine
+        adb -s $device shell am force-stop $package
         rm -r $testDir
         echo "[v] OK"
         echo ""
