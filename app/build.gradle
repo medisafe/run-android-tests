@@ -37,4 +37,5 @@ dependencies {
     configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
         androidTestCompileDependency.exclude group: 'com.android.support'
     }
+    androidTestImplementation 'de.schroepf:android-xml-run-listener:0.4.0'
 }

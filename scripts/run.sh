@@ -79,25 +79,33 @@ do
 
     # create folder
     testDir="$outputDir/$line"
+    rm -rf $testDir
     mkdir $testDir
 
     # files we create
-    runningTest="$testDir/running-test-$device.txt"
-    recording="$testDir/recording.mp4"
-    logcat="$testDir/logcat.txt"
-    db="$testDir/app.db"
-    preferences="$testDir/shared_preferences.xml"
-    netstats="$testDir/dumpsys_netstats.txt"
-    batterystats="$testDir/dumpsys_batterystats.txt"
-    alarms="$testDir/dumpsys_alarm.txt"
+    report="$testDir/report"
+    files="$testDir/data"
+    mkdir $files
+    runningTest="$files/running-test-$device.txt"
+    recording="$files/recording.mp4"
+    logcat="$files/logcat.txt"
+    db="$files/app.db"
+    preferences="$files/shared_preferences.xml"
+    netstats="$files/dumpsys_netstats.txt"
+    batterystats="$files/dumpsys_batterystats.txt"
+    alarms="$files/dumpsys_alarm.txt"
 
     # start collecting logs
     adb -s $device logcat > "$logcat" &
     PID_LOGCAT=$!
 
     # start recording video
-    adb -s $device shell screenrecord --bit-rate 6000000 "/sdcard/recording.mp4" &
+    adb -s $device shell screenrecord "/sdcard/recording.mp4" &
     PID_RECORDING=$!
+
+    # prepare junit xml report folder
+    mkdir $report
+    adb -s $device shell rm /sdcard/Android/data/$package/files/report*.xml
 
     # parse to get param (in case of params)
     if [[ $line == *":"* ]]; then
@@ -105,12 +113,12 @@ do
         testArr=(${line//:/ })
         test=${testArr[0]}
         index=${testArr[1]}
-        adb -s $device shell am instrument -w -e class $test -e paramIndex $index -e debug false $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
+        adb -s $device shell am instrument -w -e class $test -e paramIndex $index -e debug false -e listener de.schroepf.androidxmlrunlistener.XmlRunListener $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
     else
         # run as usual
         echo "$line"
         startTime=$(node -e 'console.log(Date.now())')
-        adb -s $device shell am instrument -w -e class $line -e debug false $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
+        adb -s $device shell am instrument -w -e class $line -e debug false -e listener de.schroepf.androidxmlrunlistener.XmlRunListener $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
         endTime=$(node -e 'console.log(Date.now())')
         echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis."
         echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis." >> "$outputDir/times.txt"
@@ -124,9 +132,12 @@ do
     kill $PID_RECORDING
     sleep 3
 
-     # pull and remove recording from device
+    # pull and remove recording from device
     adb -s $device pull "/sdcard/recording.mp4" $recording
     adb -s $device shell rm "/sdcard/recording.mp4"
+
+    # pull xml report
+    adb -s $device pull /sdcard/Android/data/$package/files/report-0.xml $report/
 
     # SCAN for errors
     shortReason=''
@@ -158,7 +169,7 @@ do
     else
 
         # remove dir if we are fine
-        rm -r $testDir
+        rm -rf $files
         echo "[v] OK"
         echo ""
     fi
