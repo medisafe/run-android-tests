@@ -89,11 +89,11 @@ adb install -r app/build/outputs/apk/app-debug-androidTest.apk
 
 # ---- prepare and run the tests ----
 # create tests raw file
-./scripts/raw.sh artifacts/raw-tests.txt
+./scripts/raw.sh artifacts/raw-tests.txt com.sromku.sample.runtests
 # build execution plan and filter by tags
-./scripts/plan.sh artifacts/raw-tests.txt artifacts/execution-plan.txt
+./scripts/plan.sh artifacts/raw-tests.txt artifacts/execution-plan.txt com.sromku.sample.runtests
 # run the tests
-./scripts/run.sh artifacts/execution-plan.txt artifacts
+./scripts/run.sh artifacts/execution-plan.txt artifacts com.sromku.sample.runtests
 ```
 
 ### Detailed docs

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Created by sromku with ☕
-package=com.sromku.sample.runtests
 planFile=$1
 outputDir=$2
-device=$3
+package=$3
+device=$4
 
 # check for correct input
-if [ -z $planFile ] || [ -z $outputDir ] ; then
+if [ -z $planFile ] || [ -z $outputDir ] || [ -z $package ] ; then
     echo "Missing params"
     exit 1
 fi

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Created by sromku with ☕
-package=com.sromku.sample.runtests
 rawTests=$1
 planOutput=$2
-flag=$3
-selectedTags=$4
+package=$3
+flag=$4
+selectedTags=$5
 
-if [ -z $rawTests ] || [ -z $planOutput ] ; then
+if [ -z $rawTests ] || [ -z $planOutput ] || [ -z $package ] ; then
     echo "Missing params"
     exit 1
 fi
