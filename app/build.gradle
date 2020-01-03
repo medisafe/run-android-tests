@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.sromku.sample.runtests"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -21,21 +20,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
-    testCompile 'junit:junit:4.12'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
+    testImplementation 'junit:junit:4.12'
 
     def espressoVersion = '2.2.2'
     def testRunnerVersion = '0.5'
 
-    androidTestCompile "com.android.support.test:runner:${testRunnerVersion}"
-    androidTestCompile "com.android.support.test:rules:${testRunnerVersion}"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:${espressoVersion}"
-    androidTestCompile "com.android.support.test.espresso:espresso-contrib:${espressoVersion}"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
     configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
         androidTestCompileDependency.exclude group: 'com.android.support'
     }
+    androidTestImplementation 'de.schroepf:android-xml-run-listener:0.4.0'
 }

@@ -1,8 +1,8 @@
 package com.sromku.sample.runtests;
 
 import android.os.Bundle;
-import android.support.test.internal.runner.listener.InstrumentationResultPrinter;
-import android.support.test.internal.runner.listener.InstrumentationRunListener;
+import androidx.test.internal.runner.listener.InstrumentationResultPrinter;
+import androidx.test.internal.runner.listener.InstrumentationRunListener;
 
 import org.junit.runner.Description;
 
