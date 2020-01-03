@@ -1,6 +1,6 @@
 package com.sromku.sample.runtests;
 
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -105,12 +105,12 @@ do
         testArr=(${line//:/ })
         test=${testArr[0]}
         index=${testArr[1]}
-        adb -s $device shell am instrument -w -e class $test -e paramIndex $index $package.test/android.support.test.runner.AndroidJUnitRunner > $runningTest
+        adb -s $device shell am instrument -w -e class $test -e paramIndex $index -e debug false $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
     else
         # run as usual
         echo "$line"
         startTime=$(node -e 'console.log(Date.now())')
-        adb -s $device shell am instrument -w -e class $line $package.test/android.support.test.runner.AndroidJUnitRunner > $runningTest
+        adb -s $device shell am instrument -w -e class $line -e debug false $package.test/androidx.test.runner.AndroidJUnitRunner > $runningTest
         endTime=$(node -e 'console.log(Date.now())')
         echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis."
         echo "test ($line) device ($device) , duration: $((endTime-startTime)) millis." >> "$outputDir/times.txt"

@@ -1,9 +1,9 @@
 package com.sromku.sample.runtests.tags;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.sromku.sample.runtests.MainActivity;
 import com.sromku.sample.runtests.Tags;
@@ -27,7 +27,7 @@ public class TagsOne {
     @Test
     @Tags(tags = {"sanity", "small"})
     public void testA() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Utils.sleep(1000);
         assertEquals("com.sromku.sample.runtests", appContext.getPackageName());
     }
@@ -35,7 +35,7 @@ public class TagsOne {
     @Test
     @Tags(tags = {"sanity", "medium"})
     public void testB() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Utils.sleep(4000);
         assertEquals("com.sromku.sample.runtests", appContext.getPackageName());
     }
@@ -43,7 +43,7 @@ public class TagsOne {
     @Test
     @Tags(tags = {"special"})
     public void testC() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Utils.sleep(4000);
         assertEquals("com.sromku.sample.runtests", appContext.getPackageName());
     }
@@ -51,7 +51,7 @@ public class TagsOne {
     @Test
     @Tags(tags = {"extreme", "special"})
     public void testD() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Utils.sleep(4000);
         assertEquals("com.sromku.sample.runtests", appContext.getPackageName());
     }
@@ -59,7 +59,7 @@ public class TagsOne {
     @Test
     @Tags(tags = {"extreme", "small", "medium", "special"})
     public void testE() throws Exception {
-        Context appContext = InstrumentationRegistry.getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Utils.sleep(4000);
         assertEquals("com.sromku.sample.runtests", appContext.getPackageName());
     }
